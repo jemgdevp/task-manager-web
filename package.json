@@ -10,8 +10,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint . --fix",
+    "lint:check": "eslint .",
     "format": "prettier --write src/",
-    "test": "vitest"
+    "test": "vitest",
+    "test:run": "vitest run",
+    "ci": "pnpm lint:check && pnpm test:run && pnpm build"
   },
   "dependencies": {
     "@lucide/vue": "^1.7.0",
