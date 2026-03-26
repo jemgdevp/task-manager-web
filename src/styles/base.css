@@ -3,28 +3,27 @@
 */
 
 @font-face {
-  font-family: 'Conthrax';
+  font-family: "Conthrax";
   src:
-    url('/src/assets/font/ConthraxSb-Regular/conthrax-sb.woff2') format('woff2'),
-    url('/src/assets/font/ConthraxSb-Regular/conthrax-sb.woff') format('woff'),
-    url('/src/assets/font/ConthraxSb-Regular/conthrax-sb.ttf') format('truetype');
+    url("/src/assets/font/ConthraxSb-Regular/conthrax-sb.woff2") format("woff2"),
+    url("/src/assets/font/ConthraxSb-Regular/conthrax-sb.woff") format("woff"),
+    url("/src/assets/font/ConthraxSb-Regular/conthrax-sb.ttf")
+      format("truetype");
   font-weight: 600; /* Semi-bold */
   font-style: normal;
   font-display: swap; /* Muestra fallback mientras carga */
 }
 
 @layer components {
-
   /* Fuente Conthrax - Para títulos, headers, branding */
   .font-conthrax {
-    font-family: 'Conthrax', 'Arial Black', sans-serif;
+    font-family: "Conthrax", "Arial Black", sans-serif;
     font-weight: 600;
   }
 
-
   /* Estilos de texto con Conthrax */
   .text-brand {
-    font-family: 'Conthrax', 'Arial Black', sans-serif;
+    font-family: "Conthrax", "Arial Black", sans-serif;
     font-weight: 600;
     letter-spacing: 0.025em;
     text-transform: uppercase;
