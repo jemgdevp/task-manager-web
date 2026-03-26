@@ -2,6 +2,9 @@
 import { onMounted } from 'vue';
 import { RouterView } from 'vue-router';
 import { AppLayout } from './components/layout/AppLayout.vue';
+
+
+
 </script>
 
 <template>
@@ -10,4 +13,4 @@ import { AppLayout } from './components/layout/AppLayout.vue';
   </AppLayout> 
 </template>
 
-<style></style>
+<style scoped></style>
