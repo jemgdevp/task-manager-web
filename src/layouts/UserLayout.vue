@@ -1,7 +1,7 @@
-<script setup lang="js">
-
-</script>
+<script setup lang="js"></script>
 <template>
-    <div></div>
+  <section class="w-full max-w-6xl mx-auto">
+    <slot />
+  </section>
 </template>
 <style scoped></style>

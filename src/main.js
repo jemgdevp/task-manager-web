@@ -1,28 +1,24 @@
 /**
  * Styles
  */
-import './styles/main.css'
+import "./styles/main.css";
 /**
  * Scripts
  */
-import { createApp } from 'vue'
-import { createPinia } from 'pinia'
+import { createApp } from "vue";
+import { createPinia } from "pinia";
+import "./plugins/echo";
 
 /**
  * Imports
  */
-import App from './App.vue'
-import router from './router'
-import axiosPlugin from 'axios'
-import { useTaskStore } from './stores/task'
-import { useAuthStore } from './stores/auth'
+import App from "./App.vue";
+import router from "./router";
 
-const app = createApp(App)
-const pinia = createPinia()
+const app = createApp(App);
+const pinia = createPinia();
 
-app.use(pinia)
-app.use(router)
-app.use(axiosPlugin)
+app.use(pinia);
+app.use(router);
 
-
-app.mount('#app')
+app.mount("#app");
