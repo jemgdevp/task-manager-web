@@ -11,7 +11,7 @@ RUN npm install -g npm@latest
 
 ## Set up pnpm
 
-RUN corepack enable && corepack prepare pnpm@latest --activate
+RUN npm install -g pnpm
 
 ## Install dependencies
 RUN pnpm install
