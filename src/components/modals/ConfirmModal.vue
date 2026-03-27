@@ -49,38 +49,40 @@ const onBackdropClick = () => {
 </script>
 
 <template>
-    <div v-if="open" class="fixed inset-0 z-60" role="dialog" aria-modal="true">
-        <div class="fixed inset-0 bg-black/40" @click="onBackdropClick" />
+    <Teleport to="body">
+        <div v-if="open" class="fixed inset-0 z-50" role="dialog" aria-modal="true">
+            <div class="fixed inset-0 bg-black/40" @click="onBackdropClick" />
 
-        <div class="fixed inset-0 flex items-center justify-center p-4">
-            <div class="card bg-base-100 w-full max-w-md shadow-xl border border-base-300">
-                <div class="card-body">
-                    <h2 class="text-xl font-bold mb-2">{{ title }}</h2>
-                    <p class="mb-6 opacity-80">{{ message }}</p>
-                    <div class="flex justify-end gap-3">
-                        <button
-                            class="btn btn-ghost"
-                            :disabled="loading"
-                            type="button"
-                            @click="$emit('cancel')"
-                        >
-                            {{ cancelText }}
-                        </button>
-                        <button
-                            class="btn"
-                            :class="confirmButtonClass"
-                            :disabled="loading"
-                            type="button"
-                            @click="$emit('confirm')"
-                        >
-                            <span v-if="loading" class="loading loading-spinner loading-xs" />
-                            {{ confirmText }}
-                        </button>
+            <div class="fixed inset-0 flex items-center justify-center p-4">
+                <div class="card bg-base-100 w-full max-w-md shadow-xl border border-base-300">
+                    <div class="card-body">
+                        <h2 class="text-xl font-bold mb-2">{{ title }}</h2>
+                        <p class="mb-6 opacity-80">{{ message }}</p>
+                        <div class="flex justify-end gap-3">
+                            <button
+                                class="btn btn-ghost"
+                                :disabled="loading"
+                                type="button"
+                                @click="$emit('cancel')"
+                            >
+                                {{ cancelText }}
+                            </button>
+                            <button
+                                class="btn"
+                                :class="confirmButtonClass"
+                                :disabled="loading"
+                                type="button"
+                                @click="$emit('confirm')"
+                            >
+                                <span v-if="loading" class="loading loading-spinner loading-xs" />
+                                {{ confirmText }}
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    </Teleport>
 </template>
 
 <style scoped></style>

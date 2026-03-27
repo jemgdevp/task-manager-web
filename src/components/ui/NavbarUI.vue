@@ -42,6 +42,7 @@ const confirmLogout = async () => {
         TaskManager
       </RouterLink>
     </div>
+    
     <div class="navbar-end ml-auto gap-2">
       <ThemeSwitcher compact />
       <template v-if="authStore.isAuthenticated">
