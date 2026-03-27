@@ -3,8 +3,9 @@
   "private": true,
   "version": "0.0.1",
   "description": "WEB Page TaskManagerApp",
-  "author": "Juan Esteban Manrique <murksopps@gmail.com>",
+  "author": "<jemgdevp> Juan Esteban Manrique <murksopps@gmail.com>",
   "type": "module",
+  "homepage": "https://taskmanager.jemg.dev",
   "packageManager": "pnpm@10.12.4",
   "scripts": {
     "dev": "vite",
@@ -42,7 +43,9 @@
     "vitest": "^4.1.2"
   },
   "engines": {
-    "node": ">= 22",
-    "npm": ">= 10"
-  }
+    "node": ">= 20",
+    "npm": ">= 10",
+    "pnpm": ">= 10"
+  },
+  "license": "MIT"
 }
