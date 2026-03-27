@@ -1,4 +1,5 @@
 <script setup lang="js">
+// Props
 const props = defineProps({
     open: {
         type: Boolean,
@@ -46,6 +47,7 @@ const onBackdropClick = () => {
 
 
 </script>
+
 <template>
     <div v-if="open" class="fixed inset-0 z-60" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-black/40" @click="onBackdropClick" />

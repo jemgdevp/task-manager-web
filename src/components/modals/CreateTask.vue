@@ -2,6 +2,7 @@
 import { reactive } from "vue";
 import { useTaskStore } from "@/stores/task";
 
+// Props
 const props = defineProps({
   open: {
     type: Boolean,
@@ -46,10 +47,11 @@ const submit = async () => {
     resetForm();
     closeModal();
   } catch {
-    // Store-level error handles message.
+    // Managed by the store, so no need to do anything here.
   }
 };
 </script>
+
 <template>
   <div v-if="props.open" class="fixed inset-0 z-50">
     <div class="absolute inset-0 bg-black/40" @click="closeModal" />
@@ -106,4 +108,5 @@ const submit = async () => {
     </div>
   </div>
 </template>
+
 <style scoped></style>
