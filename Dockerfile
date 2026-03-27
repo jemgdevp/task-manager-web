@@ -1,5 +1,5 @@
 ## node:latest Version (build-stage)
-FROM node AS build-stage
+FROM node:latest AS build-stage
 
 ## Define working directory
 WORKDIR /app
@@ -21,7 +21,7 @@ COPY ./ .
 RUN pnpm run build
 
 # Production stage
-FROM nginx AS production-stage
+FROM nginx:stable-alpine AS production-stage
 
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
