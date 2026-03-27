@@ -2,8 +2,10 @@ import axios from "axios";
 
 export const AUTH_TOKEN_KEY = "auth_token";
 
+const apiBaseUrl = import.meta.env.VITE_API_URL ?? "";
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: apiBaseUrl,
   timeout: 10000, // 10 seconds
   withCredentials: true,
   headers: {

@@ -7,6 +7,7 @@ import "./styles/main.css";
  */
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+// Echo client setup
 import "./plugins/echo";
 
 /**
