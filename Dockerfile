@@ -23,6 +23,9 @@ RUN pnpm run build
 # Production stage
 FROM nginx:stable-alpine AS production-stage
 
+# Install bash for interactive troubleshooting
+RUN apk add --no-cache bash
+
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /app/dist /usr/share/nginx/html
