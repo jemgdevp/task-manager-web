@@ -6,7 +6,6 @@
   "author": "<jemgdevp> Juan Esteban Manrique <murksopps@gmail.com>",
   "type": "module",
   "homepage": "https://taskmanager.jemg.dev",
-  "packageManager": "pnpm@10.12.4",
   "scripts": {
     "dev": "vite",
     "build": "vite build",

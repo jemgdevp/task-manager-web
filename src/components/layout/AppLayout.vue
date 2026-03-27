@@ -1,13 +1,18 @@
 <script setup lang="js">
+// Scripts
 import { computed } from "vue";
 import { useRouter } from "vue-router";
+// Components
 import NavbarUI from "@/components/ui/NavbarUI.vue";
 import FooterUI from "@/components/ui/FooterUI.vue";
+// Stores
 import { useAuthStore } from "@/stores/auth";
 
+// Logic
 const router = useRouter();
 const authStore = useAuthStore();
 
+// Computed
 const verificationAlertClass = computed(() => {
   if (authStore.verificationNoticeType === "error") {
     return "alert-error";
