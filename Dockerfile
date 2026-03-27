@@ -28,6 +28,3 @@ WORKDIR /app
 
 COPY --from=build-stage /app/dist /app
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
-
-## Expose port 80 to the outside world
-EXPOSE 80
