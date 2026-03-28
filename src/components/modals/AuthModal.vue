@@ -92,17 +92,18 @@ const submit = async () => {
           <form class="space-y-3" @submit.prevent="submit">
             <fieldset v-if="isRegisterMode" class="fieldset">
               <legend class="fieldset-legend">Name</legend>
-              <input v-model="form.name" class="input input-bordered w-full" required />
+              <input v-model="form.name" class="input input-bordered w-full" required autocomplete="name" placeholder="name" />
             </fieldset>
 
             <fieldset class="fieldset">
-              <legend class="fieldset-legend">Email</legend>
+              <legend class="fieldset-legend">Email Address</legend>
               <input
                 v-model="form.email"
                 type="email"
                 class="input input-bordered w-full"
                 required
                 autocomplete="email"
+                placeholder="email"
               />
             </fieldset>
 
@@ -114,6 +115,7 @@ const submit = async () => {
                 class="input input-bordered w-full"
                 required
                 minlength="8"
+                placeholder="password"
                 autocomplete="current-password"
               />
             </fieldset>
@@ -126,6 +128,7 @@ const submit = async () => {
                 class="input input-bordered w-full"
                 required
                 minlength="8"
+                placeholder="confirm password"
                 autocomplete="new-password"
               />
             </fieldset>
@@ -147,4 +150,5 @@ const submit = async () => {
     </div>
   </div>
 </template>
+
 <style scoped></style>
