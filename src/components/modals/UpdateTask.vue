@@ -66,14 +66,20 @@ const submit = async () => {
     <div class="absolute inset-0 bg-black/40" @click="closeModal" />
 
     <div class="absolute inset-0 flex items-center justify-center p-4">
-      <div class="card bg-base-100 w-full max-w-lg shadow-xl border border-base-300">
+      <div
+        class="card bg-base-100 w-full max-w-lg shadow-xl border border-base-300"
+      >
         <div class="card-body">
           <h3 class="card-title">Update task</h3>
 
           <form class="space-y-3" @submit.prevent="submit">
             <fieldset class="fieldset">
               <legend class="fieldset-legend">Title</legend>
-              <input v-model="form.title" class="input input-bordered w-full" required />
+              <input
+                v-model="form.title"
+                class="input input-bordered w-full"
+                required
+              />
             </fieldset>
 
             <fieldset class="fieldset">
@@ -88,7 +94,10 @@ const submit = async () => {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
               <fieldset class="fieldset">
                 <legend class="fieldset-legend">Status</legend>
-                <select v-model="form.status" class="select select-bordered w-full">
+                <select
+                  v-model="form.status"
+                  class="select select-bordered w-full"
+                >
                   <option value="pending">Pending</option>
                   <option value="in_progress">In progress</option>
                   <option value="done">Done</option>
@@ -97,7 +106,11 @@ const submit = async () => {
 
               <fieldset class="fieldset">
                 <legend class="fieldset-legend">Due date</legend>
-                <input v-model="form.due_date" class="input input-bordered w-full" type="date" />
+                <input
+                  v-model="form.due_date"
+                  class="input input-bordered w-full"
+                  type="date"
+                />
               </fieldset>
             </div>
 
@@ -106,8 +119,14 @@ const submit = async () => {
             </div>
 
             <div class="card-actions justify-end">
-              <button class="btn btn-ghost" type="button" @click="closeModal">Cancel</button>
-              <button class="btn btn-primary" :disabled="taskStore.loading" type="submit">
+              <button class="btn btn-ghost" type="button" @click="closeModal">
+                Cancel
+              </button>
+              <button
+                class="btn btn-primary"
+                :disabled="taskStore.loading"
+                type="submit"
+              >
                 Update
               </button>
             </div>

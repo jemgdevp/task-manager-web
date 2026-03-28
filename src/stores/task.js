@@ -149,7 +149,8 @@ export const useTaskStore = defineStore("task", {
 
       this.detachRealtime();
 
-      const publicChannelName = import.meta.env.VITE_REVERB_TASKS_CHANNEL ?? "tasks";
+      const publicChannelName =
+        import.meta.env.VITE_REVERB_TASKS_CHANNEL ?? "tasks";
 
       this.publicChannelName = publicChannelName;
 

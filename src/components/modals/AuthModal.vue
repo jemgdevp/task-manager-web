@@ -68,7 +68,9 @@ const submit = async () => {
     <div class="absolute inset-0 bg-black/40" @click="closeModal" />
 
     <div class="absolute inset-0 flex items-center justify-center p-4">
-      <div class="card bg-base-100 w-full max-w-md shadow-xl border border-base-300">
+      <div
+        class="card bg-base-100 w-full max-w-md shadow-xl border border-base-300"
+      >
         <div class="card-body">
           <div class="tabs tabs-box mb-2">
             <button
@@ -92,7 +94,13 @@ const submit = async () => {
           <form class="space-y-3" @submit.prevent="submit">
             <fieldset v-if="isRegisterMode" class="fieldset">
               <legend class="fieldset-legend">Name</legend>
-              <input v-model="form.name" class="input input-bordered w-full" required autocomplete="name" placeholder="name" />
+              <input
+                v-model="form.name"
+                class="input input-bordered w-full"
+                required
+                autocomplete="name"
+                placeholder="name"
+              />
             </fieldset>
 
             <fieldset class="fieldset">
@@ -138,10 +146,19 @@ const submit = async () => {
             </div>
 
             <div class="card-actions justify-end pt-2">
-              <button class="btn btn-ghost" type="button" @click="closeModal">Cancel</button>
-              <button class="btn btn-primary" type="submit" :disabled="authStore.loading">
-                <span v-if="authStore.loading" class="loading loading-spinner loading-xs" />
-                {{ isRegisterMode ? 'Create account' : 'Login' }}
+              <button class="btn btn-ghost" type="button" @click="closeModal">
+                Cancel
+              </button>
+              <button
+                class="btn btn-primary"
+                type="submit"
+                :disabled="authStore.loading"
+              >
+                <span
+                  v-if="authStore.loading"
+                  class="loading loading-spinner loading-xs"
+                />
+                {{ isRegisterMode ? "Create account" : "Login" }}
               </button>
             </div>
           </form>

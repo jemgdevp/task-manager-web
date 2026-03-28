@@ -18,7 +18,9 @@ const selectedTask = ref(null);
 const taskToDelete = ref(null);
 const deleteLoading = ref(false);
 
-const isEmptyState = computed(() => !taskStore.loading && taskStore.tasks.length === 0);
+const isEmptyState = computed(
+  () => !taskStore.loading && taskStore.tasks.length === 0,
+);
 const deleteConfirmMessage = computed(() => {
   const taskTitle = taskToDelete.value?.title ?? "this task";
 
@@ -98,8 +100,12 @@ onMounted(async () => {
     />
 
     <div class="flex flex-wrap gap-3 justify-between items-center mb-4">
-      <div class="badge badge-outline">Total: {{ taskStore.pagination.total }}</div>
-      <button class="btn btn-primary" type="button" @click="openCreateModal">New Task</button>
+      <div class="badge badge-outline">
+        Total: {{ taskStore.pagination.total }}
+      </div>
+      <button class="btn btn-primary" type="button" @click="openCreateModal">
+        New Task
+      </button>
     </div>
 
     <div v-if="taskStore.error" class="alert alert-error mb-4">
@@ -124,7 +130,9 @@ onMounted(async () => {
           <div class="flex justify-between gap-2 items-start">
             <div>
               <h3 class="card-title">{{ task.title }}</h3>
-              <p class="opacity-75 mt-1">{{ task.description || 'No description' }}</p>
+              <p class="opacity-75 mt-1">
+                {{ task.description || "No description" }}
+              </p>
             </div>
             <span
               class="badge"
@@ -143,10 +151,18 @@ onMounted(async () => {
           </div>
 
           <div class="card-actions justify-end mt-2">
-            <button class="btn btn-sm btn-outline" type="button" @click="toggleTaskStatus(task)">
-              {{ task.status === 'done' ? 'Reopen' : 'Mark done' }}
+            <button
+              class="btn btn-sm btn-outline"
+              type="button"
+              @click="toggleTaskStatus(task)"
+            >
+              {{ task.status === "done" ? "Reopen" : "Mark done" }}
             </button>
-            <button class="btn btn-sm btn-outline" type="button" @click="openUpdateModal(task)">
+            <button
+              class="btn btn-sm btn-outline"
+              type="button"
+              @click="openUpdateModal(task)"
+            >
               Edit
             </button>
             <button
@@ -171,19 +187,26 @@ onMounted(async () => {
         Prev
       </button>
       <button class="join-item btn btn-disabled" type="button">
-        Page {{ taskStore.pagination.currentPage }} / {{ taskStore.pagination.lastPage }}
+        Page {{ taskStore.pagination.currentPage }} /
+        {{ taskStore.pagination.lastPage }}
       </button>
       <button
         class="join-item btn"
         type="button"
-        :disabled="taskStore.pagination.currentPage >= taskStore.pagination.lastPage"
+        :disabled="
+          taskStore.pagination.currentPage >= taskStore.pagination.lastPage
+        "
         @click="loadTasks(taskStore.pagination.currentPage + 1)"
       >
         Next
       </button>
     </div>
 
-    <CreateTask :open="createModalOpen" @close="closeCreateModal" @saved="loadTasks" />
+    <CreateTask
+      :open="createModalOpen"
+      @close="closeCreateModal"
+      @saved="loadTasks"
+    />
     <UpdateTask
       :open="updateModalOpen"
       :task="selectedTask"

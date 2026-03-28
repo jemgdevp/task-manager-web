@@ -36,22 +36,31 @@ const resendVerification = async () => {
 const openVerifyPage = () => {
   router.push({
     name: "auth.verify-email",
-    query: { status: authStore.isEmailVerified ? "already-verified" : "pending" },
+    query: {
+      status: authStore.isEmailVerified ? "already-verified" : "pending",
+    },
   });
 };
 </script>
 
 <template>
   <div class="min-h-screen flex flex-col bg-base-100 text-base-content">
+    <!-- Navbar -->
     <NavbarUI />
 
-    <div v-if="authStore.needsEmailVerification" class="container mx-auto px-4 pt-4 w-full">
+    <div
+      v-if="authStore.needsEmailVerification"
+      class="container mx-auto px-4 pt-4 w-full"
+    >
       <div class="alert alert-warning border border-warning/40">
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 w-full">
+        <div
+          class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 w-full"
+        >
           <div>
             <p class="font-semibold">Verify your email</p>
             <p class="text-sm opacity-85">
-              Your account is active, but you need to verify your email to complete onboarding.
+              Your account is active, but you need to verify your email to
+              complete onboarding.
             </p>
           </div>
 
@@ -70,7 +79,10 @@ const openVerifyPage = () => {
               :disabled="authStore.verificationLoading"
               @click="resendVerification"
             >
-              <span v-if="authStore.verificationLoading" class="loading loading-spinner loading-xs" />
+              <span
+                v-if="authStore.verificationLoading"
+                class="loading loading-spinner loading-xs"
+              />
               Resend email
             </button>
           </div>
@@ -84,7 +96,11 @@ const openVerifyPage = () => {
     >
       <div class="alert" :class="verificationAlertClass">
         <span>{{ authStore.verificationNotice }}</span>
-        <button class="btn btn-xs btn-ghost" type="button" @click="authStore.clearVerificationNotice">
+        <button
+          class="btn btn-xs btn-ghost"
+          type="button"
+          @click="authStore.clearVerificationNotice"
+        >
           Dismiss
         </button>
       </div>

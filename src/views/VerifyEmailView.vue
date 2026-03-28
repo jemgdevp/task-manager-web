@@ -16,7 +16,8 @@ const statusConfig = computed(() => {
     case "verified":
       return {
         title: "Email verified successfully",
-        message: "Your account is now verified. You can continue to your dashboard.",
+        message:
+          "Your account is now verified. You can continue to your dashboard.",
         alertClass: "alert-success",
       };
 
@@ -131,7 +132,10 @@ onBeforeUnmount(() => {
             :disabled="authStore.verificationLoading"
             @click="resendVerification"
           >
-            <span v-if="authStore.verificationLoading" class="loading loading-spinner loading-xs" />
+            <span
+              v-if="authStore.verificationLoading"
+              class="loading loading-spinner loading-xs"
+            />
             Resend verification email
           </button>
 
@@ -144,11 +148,19 @@ onBeforeUnmount(() => {
             Check status now
           </button>
 
-          <RouterLink v-if="authStore.isAuthenticated" class="btn btn-outline" :to="{ name: 'tasks.index' }">
+          <RouterLink
+            v-if="authStore.isAuthenticated"
+            class="btn btn-outline"
+            :to="{ name: 'tasks.index' }"
+          >
             Go to dashboard
           </RouterLink>
 
-          <RouterLink v-else class="btn btn-outline" :to="{ name: 'guest.home' }">
+          <RouterLink
+            v-else
+            class="btn btn-outline"
+            :to="{ name: 'guest.home' }"
+          >
             Go to login
           </RouterLink>
         </div>

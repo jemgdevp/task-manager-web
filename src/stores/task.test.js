@@ -35,8 +35,16 @@ describe("task store", () => {
 
     expect(api.get).toHaveBeenCalledWith("/api/tasks", { params: { page: 2 } });
     expect(taskStore.tasks).toHaveLength(1);
-    expect(taskStore.tasks[0]).toMatchObject({ id: 1, title: "Task 1", status: "pending" });
-    expect(taskStore.pagination).toMatchObject({ currentPage: 2, total: 21, lastPage: 2 });
+    expect(taskStore.tasks[0]).toMatchObject({
+      id: 1,
+      title: "Task 1",
+      status: "pending",
+    });
+    expect(taskStore.pagination).toMatchObject({
+      currentPage: 2,
+      total: 21,
+      lastPage: 2,
+    });
   });
 
   it("creates a task from { data } API response", async () => {
@@ -65,7 +73,11 @@ describe("task store", () => {
 
     await taskStore.updateTask(1, { status: "done" });
 
-    expect(taskStore.tasks[0]).toMatchObject({ id: 1, title: "Updated", status: "done" });
+    expect(taskStore.tasks[0]).toMatchObject({
+      id: 1,
+      title: "Updated",
+      status: "done",
+    });
 
     api.delete.mockResolvedValueOnce({ data: { message: "Task deleted" } });
 

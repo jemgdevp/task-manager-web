@@ -71,7 +71,8 @@ export const useAuthStore = defineStore("auth", {
         };
       }
 
-      this.emailVerificationRequired = Boolean(this.token) && this.user?.email_verified === false;
+      this.emailVerificationRequired =
+        Boolean(this.token) && this.user?.email_verified === false;
     },
     persistAuth() {
       if (this.token) {
@@ -157,8 +158,8 @@ export const useAuthStore = defineStore("auth", {
 
       const emailVerificationRequired = Boolean(
         payload?.email_verification_required ??
-          responseData?.email_verification_required ??
-          (userEmailVerified === false),
+        responseData?.email_verification_required ??
+        userEmailVerified === false,
       );
 
       return {
@@ -212,7 +213,10 @@ export const useAuthStore = defineStore("auth", {
       try {
         const response = await api.post("/api/login", { email, password });
         const { user, token } = this.resolveAuthPayload(response.data);
-        const verificationState = this.resolveVerificationState(response.data, user);
+        const verificationState = this.resolveVerificationState(
+          response.data,
+          user,
+        );
 
         if (!token) {
           throw {
@@ -225,7 +229,8 @@ export const useAuthStore = defineStore("auth", {
           ? {
               ...user,
               email_verified:
-                verificationState.userEmailVerified ?? normalizeEmailVerified(user?.email_verified),
+                verificationState.userEmailVerified ??
+                normalizeEmailVerified(user?.email_verified),
             }
           : null;
 
@@ -237,7 +242,8 @@ export const useAuthStore = defineStore("auth", {
             : !verificationState.userEmailVerified;
         this.persistAuth();
 
-        const isEmailVerified = normalizeEmailVerified(normalizedUser?.email_verified) === true;
+        const isEmailVerified =
+          normalizeEmailVerified(normalizedUser?.email_verified) === true;
 
         return {
           user: normalizedUser,
@@ -266,7 +272,10 @@ export const useAuthStore = defineStore("auth", {
           password_confirmation: passwordConfirmation,
         });
         const { user, token } = this.resolveAuthPayload(response.data);
-        const verificationState = this.resolveVerificationState(response.data, user);
+        const verificationState = this.resolveVerificationState(
+          response.data,
+          user,
+        );
 
         if (!token && user) {
           // Some backends register user successfully but do not return an auth token.
@@ -277,7 +286,8 @@ export const useAuthStore = defineStore("auth", {
         if (!token) {
           throw {
             status: 500,
-            message: "Registration succeeded but no authentication token was returned.",
+            message:
+              "Registration succeeded but no authentication token was returned.",
           };
         }
 
@@ -285,7 +295,8 @@ export const useAuthStore = defineStore("auth", {
           ? {
               ...user,
               email_verified:
-                verificationState.userEmailVerified ?? normalizeEmailVerified(user?.email_verified),
+                verificationState.userEmailVerified ??
+                normalizeEmailVerified(user?.email_verified),
             }
           : null;
 
@@ -297,7 +308,8 @@ export const useAuthStore = defineStore("auth", {
             : !verificationState.userEmailVerified;
         this.persistAuth();
 
-        const isEmailVerified = normalizeEmailVerified(normalizedUser?.email_verified) === true;
+        const isEmailVerified =
+          normalizeEmailVerified(normalizedUser?.email_verified) === true;
 
         return {
           user: normalizedUser,
@@ -349,7 +361,10 @@ export const useAuthStore = defineStore("auth", {
       } catch (error) {
         if (error?.status === 401) {
           this.clearAuth();
-          this.setVerificationNotice("Your session is invalid. Please login again.", "error");
+          this.setVerificationNotice(
+            "Your session is invalid. Please login again.",
+            "error",
+          );
         } else if (/already verified/i.test(error?.message ?? "")) {
           this.setUserEmailVerified(true);
           this.setVerificationNotice("Email is already verified.", "info");

@@ -87,7 +87,12 @@ describe("auth store", () => {
     });
 
     const authStore = useAuthStore();
-    await authStore.register("Ana", "ana@example.com", "password123", "password123");
+    await authStore.register(
+      "Ana",
+      "ana@example.com",
+      "password123",
+      "password123",
+    );
 
     expect(api.post).toHaveBeenCalledWith("/api/register", {
       name: "Ana",
@@ -108,7 +113,12 @@ describe("auth store", () => {
     });
 
     const authStore = useAuthStore();
-    await authStore.register("Leo", "leo@example.com", "password123", "password123");
+    await authStore.register(
+      "Leo",
+      "leo@example.com",
+      "password123",
+      "password123",
+    );
 
     expect(authStore.token).toBe("access-token-1");
     expect(authStore.user).toMatchObject({ id: 3, name: "Leo" });
@@ -130,7 +140,12 @@ describe("auth store", () => {
       });
 
     const authStore = useAuthStore();
-    await authStore.register("Mia", "mia@example.com", "password123", "password123");
+    await authStore.register(
+      "Mia",
+      "mia@example.com",
+      "password123",
+      "password123",
+    );
 
     expect(api.post).toHaveBeenNthCalledWith(1, "/api/register", {
       name: "Mia",
@@ -193,8 +208,13 @@ describe("auth store", () => {
 
     const response = await authStore.resendVerificationEmail();
 
-    expect(api.post).toHaveBeenCalledWith("/api/email/verification-notification");
-    expect(response).toMatchObject({ status: 200, message: "Verification link sent." });
+    expect(api.post).toHaveBeenCalledWith(
+      "/api/email/verification-notification",
+    );
+    expect(response).toMatchObject({
+      status: 200,
+      message: "Verification link sent.",
+    });
     expect(authStore.verificationNotice).toBe("Verification link sent.");
     expect(authStore.verificationNoticeType).toBe("success");
   });
@@ -209,7 +229,9 @@ describe("auth store", () => {
     authStore.token = "expired-token";
     authStore.user = { id: 10, email_verified: false };
 
-    await expect(authStore.resendVerificationEmail()).rejects.toMatchObject({ status: 401 });
+    await expect(authStore.resendVerificationEmail()).rejects.toMatchObject({
+      status: 401,
+    });
 
     expect(authStore.token).toBeNull();
     expect(authStore.user).toBeNull();
