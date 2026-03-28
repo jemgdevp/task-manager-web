@@ -7,6 +7,7 @@ import { useAuthStore } from "@/stores/auth";
 
 const router = useRouter();
 const authStore = useAuthStore();
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const authModalOpen = ref(false);
 
@@ -34,6 +35,10 @@ const handleAuthenticated = (authResult) => {
 const goToTasks = () => {
   router.push({ name: "tasks.index" });
 };
+
+const redirectToDocs = () => {
+  window.open(`${apiUrl}/docs`, "_blank");
+};
 </script>
 
 <template>
@@ -60,6 +65,10 @@ const goToTasks = () => {
 
           <button v-else class="btn btn-primary" type="button" @click="goToTasks">
             Go to Tasks
+          </button>
+
+          <button class="btn btn-ghost" type="button" @click="redirectToDocs">
+            See API documentation
           </button>
         </div>
       </div>

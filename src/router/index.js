@@ -14,7 +14,7 @@ const router = createRouter({
       name: "guest.home",
       component: HomeView,
       meta: {
-        guestOnly: true,
+        guestOnly: false,
       },
     },
     {
