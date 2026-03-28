@@ -59,8 +59,7 @@ Expected backend pieces:
 If events are not emitted yet in backend, CRUD still works via API calls.
 
 ## Docs and API Reference
-- [Documentation](docs)
-- [API Reference](https://taskmanager.jemg.dev/api/docs)
+- [API Reference](https://api.taskmanager.jemg.dev/api/docs)
 
 ## License
 
