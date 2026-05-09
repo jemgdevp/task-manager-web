@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskManager — Exposición | Portada</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        TaskManager
+        <span>Exposición · Teoría de Sistemas</span>
+      </div>
+      <nav class="nav-main" aria-label="Secciones">
+        <div class="progress-dots" aria-hidden="true">
+          <span class="is-active"></span><span></span><span></span><span></span><span></span>
+        </div>
+        <a href="index.html" class="is-active">1 · Portada</a>
+        <a href="arquitectura.html">2 · Arquitectura</a>
+        <a href="casos-uso.html">3 · Casos de uso</a>
+        <a href="mockups.html">4 · Mockups</a>
+        <a href="descripciones.html">5 · Descripciones</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Cambiar tema">☾</button>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <span class="tag">Proyecto integrador</span>
+      <h1 class="slide-title">TaskManager</h1>
+      <p class="lead">
+        Sistema de gestión de tareas <strong>API-first</strong>: organizar el trabajo personal o de equipo,
+        con sincronización en tiempo real y enfoque en cerrar tareas pendientes.
+      </p>
+
+      <div class="card">
+        <h2>Contexto y problema</h2>
+        <p class="lead" style="margin-bottom: 0.75rem">
+          En entornos académicos y profesionales se pierde visibilidad sobre prioridades, fechas límite y
+          cambios hechos por otros. Se necesita un sistema coherente que separe claramente
+          <strong>presentación</strong>, <strong>lógica de negocio</strong> y <strong>datos</strong>, y que
+          permita evolucionar el frontend sin acoplarlo al detalle del servidor.
+        </p>
+        <ul class="list-check">
+          <li><strong>Objetivo:</strong> centralizar tareas con estados, vencimiento y actualizaciones en vivo.</li>
+          <li><strong>Alcance:</strong> autenticación con token, CRUD de tareas, canales realtime (Echo + Reverb).</li>
+          <li><strong>Valor:</strong> arquitectura desacoplada, documentación OpenAPI y despliegue reproducible.</li>
+        </ul>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="margin-bottom: 0">
+          <h3>Stack</h3>
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem">
+            <strong>Laravel 12</strong> (API), <strong>Vue 3</strong> + Vite, <strong>Sanctum</strong>,
+            <strong>Laravel Echo</strong> + <strong>Reverb</strong>.
+          </p>
+        </div>
+        <div class="card" style="margin-bottom: 0">
+          <h3>Enfoque</h3>
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem">
+            Contratos HTTP estables, cliente con Axios e interceptores, eventos broadcast para
+            <code>TaskCreated</code>, <code>TaskUpdated</code>, <code>TaskDeleted</code>.
+          </p>
+        </div>
+        <div class="card" style="margin-bottom: 0">
+          <h3>Esta presentación</h3>
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem">
+            Cinco secciones navegables (también con ← →). Lista para servirse como sitio estático bajo
+            <code>/web</code> en Dokploy.
+          </p>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn btn-primary" href="arquitectura.html">Siguiente: Arquitectura →</a>
+        <span style="color: var(--text-muted); font-size: 0.85rem">Universidad Autónoma · Teoría de Sistemas</span>
+      </div>
+    </main>
+
+    <footer class="slide-footer">
+      <a class="btn btn-ghost" href="descripciones.html">← Anterior</a>
+      <small>Diapositiva 1 de 5 · <kbd>→</kbd> avanzar</small>
+      <a class="btn btn-primary" href="arquitectura.html">Siguiente →</a>
+    </footer>
+
+    <script src="assets/app.js"></script>
+  </body>
+</html>

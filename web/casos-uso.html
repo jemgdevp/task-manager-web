@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TaskManager — Diagrama de casos de uso</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Orbitron:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="assets/styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="brand">
+        TaskManager
+        <span>Exposición · Teoría de Sistemas</span>
+      </div>
+      <nav class="nav-main" aria-label="Secciones">
+        <div class="progress-dots" aria-hidden="true">
+          <span></span><span></span><span class="is-active"></span><span></span><span></span>
+        </div>
+        <a href="index.html">1 · Portada</a>
+        <a href="arquitectura.html">2 · Arquitectura</a>
+        <a href="casos-uso.html" class="is-active">3 · Casos de uso</a>
+        <a href="mockups.html">4 · Mockups</a>
+        <a href="descripciones.html">5 · Descripciones</a>
+        <button type="button" class="theme-toggle" data-theme-toggle aria-label="Cambiar tema">☾</button>
+      </nav>
+    </header>
+
+    <main class="wrap">
+      <span class="tag">Análisis</span>
+      <h1 class="slide-title">Diagrama de casos de uso</h1>
+      <p class="lead">
+        Actores: <strong>Invitado</strong> (no autenticado), <strong>Usuario autenticado</strong> y el subsistema
+        <strong>Realtime</strong> como soporte técnico de los eventos de tareas. El sistema Laravel+Vue expone
+        los casos a través de la API y la SPA.
+      </p>
+
+      <div class="card">
+        <h2>Modelo de casos de uso (Mermaid)</h2>
+        <div class="diagram-wrap">
+          <pre class="mermaid">
+flowchart TB
+  subgraph actors [Actores]
+    G((Invitado))
+    U((Usuario_autenticado))
+  end
+  subgraph system [Sistema_TaskManager]
+    UC1[Registrarse]
+    UC2[Iniciar_sesion]
+    UC3[Verificar_correo]
+    UC4[Listar_tareas]
+    UC5[Crear_tarea]
+    UC6[Editar_tarea]
+    UC7[Eliminar_tarea]
+    UC8[Sincronizar_tiempo_real]
+    UC9[Cerrar_sesion]
+  end
+  G --> UC1
+  G --> UC2
+  U --> UC3
+  U --> UC4
+  U --> UC5
+  U --> UC6
+  U --> UC7
+  U --> UC8
+  U --> UC9
+  UC8 -.->|Echo_Reverb| UC4
+  UC8 -.->|eventos| UC5
+  UC8 -.->|eventos| UC6
+  UC8 -.->|eventos| UC7
+          </pre>
+        </div>
+        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted)">
+          La línea punteada indica que la sincronización en tiempo real <strong>actualiza</strong> la vista de
+          listado y el estado local de tareas sin sustituir el CRUD explícito del usuario.
+        </p>
+      </div>
+
+      <div class="grid-3">
+        <div class="card" style="margin-bottom: 0">
+          <h3>Invitado</h3>
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
+            Puede registrarse, iniciar sesión y consultar documentación pública de la API según despliegue.
+          </p>
+        </div>
+        <div class="card" style="margin-bottom: 0">
+          <h3>Usuario autenticado</h3>
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
+            Gestiona tareas y sesión; debe cumplir reglas de verificación de correo según configuración del backend.
+          </p>
+        </div>
+        <div class="card" style="margin-bottom: 0">
+          <h3>Realtime</h3>
+          <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
+            Canales públicos y privados; autenticación de broadcasting con token Sanctum.
+          </p>
+        </div>
+      </div>
+
+      <div class="btn-row">
+        <a class="btn btn-ghost" href="arquitectura.html">← Arquitectura</a>
+        <a class="btn btn-primary" href="mockups.html">Mockups →</a>
+      </div>
+    </main>
+
+    <footer class="slide-footer">
+      <a class="btn btn-ghost" href="arquitectura.html">← Anterior</a>
+      <small>Diapositiva 3 de 5</small>
+      <a class="btn btn-primary" href="mockups.html">Siguiente →</a>
+    </footer>
+
+    <script src="assets/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
+    <script src="assets/mermaid-init.js"></script>
+  </body>
+</html>

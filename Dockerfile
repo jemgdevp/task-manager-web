@@ -1,4 +1,4 @@
-## node:latest Version (build-stage)
+## Node Stage (build-stage)
 FROM node:latest AS build-stage
 
 ## Define working directory
@@ -9,15 +9,16 @@ COPY package.json pnpm-lock.yaml ./
 ## Set up npm (latest version to ensure compatibility with pnpm)
 RUN npm install -g npm@latest
 
-## Set up pnpm
-
+## Set up pnpm (latest version to ensure compatibility with the project)
 RUN npm install -g pnpm
 
 ## Install dependencies
 RUN pnpm install
 
+# Copy the rest of the application code
 COPY ./ .
 
+# Build the application
 RUN pnpm run build
 
 # Production stage
@@ -30,8 +31,10 @@ RUN apk add --no-cache bash
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /app/dist /usr/share/nginx/html
 
+# Copy custom nginx configuration
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
 
+# Expose port 80 to the outside world
 EXPOSE 80
 
 # Start nginx server
