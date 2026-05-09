@@ -30,6 +30,8 @@ RUN apk add --no-cache bash
 # Remove default nginx website
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build-stage /app/dist /usr/share/nginx/html
+# Exposición estática (HTML) servida bajo /web/ — ver .docker/nginx.conf
+COPY --from=build-stage /app/web /usr/share/nginx/html/web
 
 # Copy custom nginx configuration
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
