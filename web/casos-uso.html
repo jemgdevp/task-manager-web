@@ -35,32 +35,58 @@
       <span class="tag">Análisis</span>
       <h1 class="slide-title">Diagrama de casos de uso</h1>
       <p class="lead">
-        Actores: <strong>Invitado</strong>, <strong>Usuario autenticado</strong> y <strong>Realtime</strong>.
-        La SPA usa <strong>Vue Router</strong> (<code>guest.home</code>, <code>tasks.index</code>,
-        <code>auth.verify-email</code>). La API publica contrato <strong>OpenAPI</strong> con <strong>Scramble</strong>
-        (<code>/docs/api</code>, <code>/docs/api.json</code>).
+        Modelo en línea con la materia de <strong>requerimientos</strong>: actores fuera del rectángulo del sistema,
+        casos de uso <strong>primarios</strong> (objetivo central del software) y <strong>secundarios</strong> (apoyo),
+        relaciones <strong>&laquo;include&raquo;</strong> (siempre se ejecuta el incluido) y mensajes en tiempo real.
       </p>
 
       <div class="card">
-        <h2>Modelo de casos de uso (Mermaid)</h2>
+        <h2>Elementos del diagrama (UML — curso)</h2>
+        <ul class="list-check">
+          <li><strong>Sistema:</strong> rectángulo que agrupa los casos de uso del software TaskManager.</li>
+          <li><strong>Actores:</strong> quien interactúa con el sistema (personas u otros sistemas).</li>
+          <li>
+            <strong>Casos de uso primarios:</strong> registrar/iniciar sesión, gestionar tareas (listar, crear, editar,
+            borrar), cerrar sesión.
+          </li>
+          <li>
+            <strong>Casos de uso secundarios:</strong> consultar documentación OpenAPI (Scramble), verificar correo,
+            sincronización en tiempo real vía Reverb/Echo.
+          </li>
+          <li>
+            <strong>&laquo;Include&raquo;:</strong> operaciones sobre tareas <strong>siempre</strong> requieren validar
+            sesión/token (Sanctum + guards). En el diagrama: flecha <code>include</code> hacia el caso reutilizado.
+          </li>
+          <li>
+            <strong>Extend</strong> (opcional): aquí no se grafica para no saturar; ejemplos de flujo opcional serían
+            “activar notificaciones” o pasos condicionales ya cubiertos en la descripción textual.
+          </li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Diagrama (Mermaid)</h2>
+        <p style="margin: 0 0 0.75rem; font-size: 0.88rem; color: var(--text-muted)">
+          <strong>P</strong> = primario · <strong>S</strong> = secundario · <code>Validar_sesion</code> = caso incluido por
+          las operaciones protegidas sobre tareas.
+        </p>
         <div class="diagram-wrap">
           <pre class="mermaid">
 flowchart TB
-  subgraph actors [Actores]
-    G((Invitado))
-    U((Usuario_autenticado))
-  end
-  subgraph system [Sistema_TaskManager]
-    UC0[Consultar_docs_Scramble]
-    UC1[Registrarse]
-    UC2[Iniciar_sesion]
-    UC3[Verificar_correo]
-    UC4[Listar_tareas]
-    UC5[Crear_tarea]
-    UC6[Editar_tarea]
-    UC7[Eliminar_tarea]
-    UC8[Sincronizar_tiempo_real]
-    UC9[Cerrar_sesion]
+  G((Invitado))
+  U((Usuario_autenticado))
+  subgraph SYS[Sistema_TaskManager]
+    UC0[Consultar_doc_API_sec]
+    UC1[Registrarse_prim]
+    UC2[Iniciar_sesion_prim]
+    UC3[Verificar_email_sec]
+    UC4[Listar_tareas_prim]
+    UC5[Crear_tarea_prim]
+    UC6[Editar_tarea_prim]
+    UC7[Eliminar_tarea_prim]
+    UC8[Sincronizar_realtime_sec]
+    UC9[Cerrar_sesion_sec]
+    UCv[Validar_token_include]
   end
   G --> UC0
   G --> UC1
@@ -72,15 +98,19 @@ flowchart TB
   U --> UC7
   U --> UC8
   U --> UC9
-  UC8 -.->|Echo_Reverb| UC4
+  UC4 -->|include| UCv
+  UC5 -->|include| UCv
+  UC6 -->|include| UCv
+  UC7 -->|include| UCv
+  UC8 -.->|eventos| UC4
   UC8 -.->|eventos| UC5
   UC8 -.->|eventos| UC6
   UC8 -.->|eventos| UC7
           </pre>
         </div>
-        <p style="margin: 0; font-size: 0.9rem; color: var(--text-muted)">
-          La línea punteada indica que la sincronización en tiempo real <strong>actualiza</strong> la vista de
-          listado y el estado local de tareas sin sustituir el CRUD explícito del usuario.
+        <p style="margin: 0.75rem 0 0; font-size: 0.9rem; color: var(--text-muted)">
+          Las líneas punteadas muestran que los eventos broadcast <strong>refrescan</strong> la vista y el estado local,
+          sin reemplazar las peticiones REST del flujo principal.
         </p>
       </div>
 
@@ -88,20 +118,22 @@ flowchart TB
         <div class="card" style="margin-bottom: 0">
           <h3>Invitado</h3>
           <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
-            Desde <code>guest.home</code>: documentación vía <code>VITE_API_URL/docs</code> → UI Scramble
-            <code>/docs/api</code>; registro e inicio de sesión hacia rutas protegidas.
+            Casos de acceso inicial y consulta de contrato (<strong>RF usuario</strong>). Entrada típica:
+            <code>guest.home</code>; docs en <code>VITE_API_URL/docs</code> → Scramble <code>/docs/api</code>.
           </p>
         </div>
         <div class="card" style="margin-bottom: 0">
           <h3>Usuario autenticado</h3>
           <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
-            Gestiona tareas y sesión; debe cumplir reglas de verificación de correo según configuración del backend.
+            Ejecuta los RF de negocio sobre tareas y sesión; la verificación de correo puede ser condición previa según
+            política (<strong>RNF</strong> seguridad / flujo de cuenta).
           </p>
         </div>
         <div class="card" style="margin-bottom: 0">
-          <h3>Realtime</h3>
+          <h3>Tiempo real</h3>
           <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
-            Canales públicos y privados; autenticación de broadcasting con token Sanctum.
+            Caso de soporte <strong>secundario</strong>: Echo + Reverb; broadcast auth con el mismo token Sanctum
+            (<strong>RF sistema</strong> + <strong>RNF</strong> coherencia en vivo).
           </p>
         </div>
       </div>

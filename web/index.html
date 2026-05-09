@@ -54,6 +54,52 @@
         </ul>
       </div>
 
+      <div class="card">
+        <h2>Requerimientos (marco del curso)</h2>
+        <p class="pdf-note" style="margin-bottom: 0.75rem">
+          Alineado con la guía académica <em>Requerimientos y casos de uso</em>: los requerimientos se clasifican por
+          <strong>nivel</strong> (negocio, usuario, sistema) y por tipo <strong>funcional (RF)</strong> vs
+          <strong>no funcional (RNF)</strong>. Los casos de uso modelan los RF y se documentan aparte (diagrama + texto).
+        </p>
+        <table class="req-table">
+          <thead>
+            <tr>
+              <th>Nivel</th>
+              <th>Pregunta guía</th>
+              <th>Ejemplo en TaskManager</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Negocio</strong></td>
+              <td>¿Por qué existe el sistema?</td>
+              <td>Reducir retrabajo por tareas desactualizadas; visibilidad de vencimientos y estado.</td>
+            </tr>
+            <tr>
+              <td><strong>Usuario</strong></td>
+              <td>¿Qué debe poder hacer el actor?</td>
+              <td>Registrarse, iniciar sesión, CRUD de tareas, ver cambios en tiempo real, consultar API docs.</td>
+            </tr>
+            <tr>
+              <td><strong>Sistema</strong></td>
+              <td>¿Cómo lo cumple técnicamente?</td>
+              <td>REST con Sanctum, Vue Router + Pinia, Reverb/Echo, OpenAPI con Scramble, HTTPS en producción.</td>
+            </tr>
+          </tbody>
+        </table>
+        <h3 style="margin: 1rem 0 0.35rem; font-size: 0.95rem">RF y RNF aplicados</h3>
+        <ul class="list-check">
+          <li>
+            <strong>RF:</strong> autenticación con usuario/contraseña y token; CRUD de tareas; verificación de correo;
+            broadcasting auth; documentación de endpoints (Scramble).
+          </li>
+          <li>
+            <strong>RNF:</strong> seguridad (HTTPS, token Bearer, acceso restringido a docs según env); rendimiento
+            razonable vía API paginada; disponibilidad dependiente del despliegue; usabilidad responsive básica en la SPA.
+          </li>
+        </ul>
+      </div>
+
       <div class="grid-3">
         <div class="card" style="margin-bottom: 0">
           <h3>Stack</h3>

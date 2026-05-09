@@ -69,6 +69,61 @@
       </div>
 
       <div class="card">
+        <h2>De requerimientos a software (RF / RNF)</h2>
+        <p style="margin: 0 0 0.65rem; font-size: 0.9rem; color: var(--text-muted)">
+          Según la guía de la asignatura, los <strong>requerimientos funcionales</strong> se modelan con casos de uso;
+          los <strong>no funcionales</strong> restringen calidad, seguridad y operación. Aquí se relacionan con piezas del
+          repositorio.
+        </p>
+        <table class="req-table">
+          <thead>
+            <tr>
+              <th>Tipo</th>
+              <th>Requerimiento (resumen)</th>
+              <th>Dónde se materializa</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>RF</td>
+              <td>Registrar e iniciar sesión; emitir token</td>
+              <td><code>routes/api.php</code>, controladores Auth, <code>stores/auth.js</code></td>
+            </tr>
+            <tr>
+              <td>RF</td>
+              <td>CRUD de tareas con validación</td>
+              <td><code>TaskController</code>, <code>stores/task.js</code>, vistas <code>/tasks</code></td>
+            </tr>
+            <tr>
+              <td>RF</td>
+              <td>Publicar y consultar contrato HTTP (OpenAPI)</td>
+              <td>Scramble <code>/docs/api</code>, atributos en controladores, export JSON</td>
+            </tr>
+            <tr>
+              <td>RF</td>
+              <td>Autorizar canales de broadcasting</td>
+              <td><code>POST /api/broadcasting/auth</code>, Echo en <code>plugins/echo.js</code></td>
+            </tr>
+            <tr>
+              <td>RNF</td>
+              <td>Seguridad de acceso y transporte</td>
+              <td>HTTPS en prod, Bearer Sanctum, restricción de docs por env</td>
+            </tr>
+            <tr>
+              <td>RNF</td>
+              <td>Rendimiento en listados</td>
+              <td>Paginación <code>GET /api/tasks?page=</code></td>
+            </tr>
+            <tr>
+              <td>RNF</td>
+              <td>Usabilidad básica</td>
+              <td>UI responsive Vue + feedback de errores Axios</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
         <h2>Flujo general</h2>
         <div class="diagram-wrap">
           <pre class="mermaid">

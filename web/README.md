@@ -2,6 +2,8 @@
 
 Contenido en HTML/CSS/JS sin paso de build. Sirve para una presentación tipo diapositivas (5 páginas).
 
+El contenido pedagógico está alineado con la guía **«Requerimientos y casos de uso»** (niveles de requerimiento, RF/RNF, elementos UML del diagrama de casos de uso, relaciones «include», plantilla de descripción con flujo actor–sistema y excepciones).
+
 ## Archivos
 
 | Página            | Archivo             |

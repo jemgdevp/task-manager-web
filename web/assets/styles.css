@@ -496,6 +496,116 @@ a:hover {
   margin-bottom: 0.35rem;
 }
 
+/* Tablas curriculares (RF/RNF, flujo Actor–Sistema) */
+.req-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin: 0.5rem 0 0;
+}
+
+.req-table th,
+.req-table td {
+  border: 1px solid var(--border);
+  padding: 0.45rem 0.55rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.req-table th {
+  background: var(--bg-page);
+  font-weight: 700;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.pdf-note {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin: 0 0 1rem;
+  padding: 0.65rem 0.85rem;
+  background: var(--bg-page);
+  border-radius: var(--radius-field);
+  border-left: 4px solid var(--accent);
+}
+
+.uc-flow-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+  margin: 0.5rem 0 1rem;
+}
+
+.uc-flow-table th,
+.uc-flow-table td {
+  border: 1px solid var(--border);
+  padding: 0.4rem 0.5rem;
+  vertical-align: top;
+}
+
+.uc-flow-table th {
+  background: var(--bg-page);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.uc-flow-table td:first-child {
+  font-weight: 700;
+  width: 2rem;
+  text-align: center;
+  background: var(--bg-page);
+}
+
+.uc-flow-table .col-actor {
+  width: 38%;
+}
+
+.badge-cu {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  margin-left: 0.35rem;
+  vertical-align: middle;
+}
+
+.badge-cu--p {
+  background: oklch(90% 0.12 145);
+  color: oklch(25% 0.08 145);
+}
+
+html.theme-dark .badge-cu--p {
+  background: oklch(35% 0.08 145);
+  color: oklch(88% 0.06 145);
+}
+
+.badge-cu--s {
+  background: oklch(88% 0.06 260);
+  color: oklch(30% 0.06 260);
+}
+
+html.theme-dark .badge-cu--s {
+  background: oklch(35% 0.06 260);
+  color: oklch(88% 0.05 260);
+}
+
+.exc-list {
+  margin: 0.35rem 0 0;
+  padding-left: 1.1rem;
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.exc-list li {
+  margin-bottom: 0.35rem;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
