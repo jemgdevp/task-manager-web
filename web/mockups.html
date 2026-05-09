@@ -56,9 +56,9 @@
               </div>
             </div>
             <div class="mockup-meta">
-              <div><strong>Pantalla:</strong> landing <code>/</code></div>
-              <div><strong>Entrada:</strong> clic en Login/Register → modal con email, contraseña, registro.</div>
-              <div><strong>Resultado esperado:</strong> token guardado; redirección a tareas o flujo de verificación.</div>
+              <div><strong>Pantalla:</strong> ruta nombrada <code>guest.home</code> · path <code>/</code> (<code>router/index.js</code>)</div>
+              <div><strong>Entrada:</strong> Login/Register → modal · Docs → <code>window.open(VITE_API_URL + '/docs')</code> → Scramble en <code>/docs/api</code>.</div>
+              <div><strong>Resultado esperado:</strong> token en <code>localStorage</code>; redirección a <code>tasks.index</code> o <code>auth.verify-email</code>.</div>
             </div>
           </div>
         </div>
@@ -104,9 +104,9 @@
               </div>
             </div>
             <div class="mockup-meta">
-              <div><strong>Pantalla:</strong> <code>/tasks</code> (ruta protegida)</div>
-              <div><strong>Entrada:</strong> <code>GET /api/tasks?page=1</code> con Bearer token.</div>
-              <div><strong>Resultado esperado:</strong> tabla/lista con paginación; estados y fechas visibles.</div>
+              <div><strong>Pantalla:</strong> <code>tasks.index</code> · path <code>/tasks</code> (<code>meta.requiresAuth</code>)</div>
+              <div><strong>Entrada:</strong> guard permite acceso solo con token; <code>GET /api/tasks?page=1</code> con Bearer.</div>
+              <div><strong>Resultado esperado:</strong> lista paginada; sin token el router envía a <code>/</code>.</div>
             </div>
           </div>
         </div>

@@ -63,10 +63,12 @@
           </p>
         </div>
         <div class="card" style="margin-bottom: 0">
-          <h3>Enfoque</h3>
+          <h3>Contrato y docs</h3>
           <p style="margin: 0; color: var(--text-muted); font-size: 0.95rem">
-            Contratos HTTP estables, cliente con Axios e interceptores, eventos broadcast para
-            <code>TaskCreated</code>, <code>TaskUpdated</code>, <code>TaskDeleted</code>.
+            La API se describe con <strong>OpenAPI</strong> generada por <strong>Dedoc Scramble</strong>
+            (<code>/docs/api</code>, JSON en <code>/docs/api.json</code>). El front abre
+            <code>${VITE_API_URL}/docs</code> desde <code>HomeView.vue</code>; en Laravel, <code>routes/web.php</code> redirige <code>/docs</code> → <code>/docs/api</code> (UI Scramble).
+            Export CI: <code>php artisan scramble:export --path=storage/api-docs/api-docs.json</code>.
           </p>
         </div>
         <div class="card" style="margin-bottom: 0">
@@ -76,6 +78,17 @@
             <code>/web</code> en Dokploy.
           </p>
         </div>
+      </div>
+
+      <div class="card">
+        <h2>Vue Router en la SPA</h2>
+        <p style="margin: 0 0 0.75rem; color: var(--text-muted); font-size: 0.95rem">
+          Rutas definidas en <code>src/router/index.js</code> con <code>createWebHistory(import.meta.env.BASE_URL)</code>:
+          <code>guest.home</code> (<code>/</code>),
+          <code>tasks.index</code> (<code>/tasks</code>, <code>requiresAuth</code>),
+          <code>auth.verify-email</code> (<code>/verify-email</code>).
+          El <code>beforeEach</code> redirige sin token desde rutas protegidas al home y gestiona verificación de correo.
+        </p>
       </div>
 
       <div class="btn-row">

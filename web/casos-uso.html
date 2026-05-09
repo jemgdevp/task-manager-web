@@ -35,9 +35,10 @@
       <span class="tag">Análisis</span>
       <h1 class="slide-title">Diagrama de casos de uso</h1>
       <p class="lead">
-        Actores: <strong>Invitado</strong> (no autenticado), <strong>Usuario autenticado</strong> y el subsistema
-        <strong>Realtime</strong> como soporte técnico de los eventos de tareas. El sistema Laravel+Vue expone
-        los casos a través de la API y la SPA.
+        Actores: <strong>Invitado</strong>, <strong>Usuario autenticado</strong> y <strong>Realtime</strong>.
+        La SPA usa <strong>Vue Router</strong> (<code>guest.home</code>, <code>tasks.index</code>,
+        <code>auth.verify-email</code>). La API publica contrato <strong>OpenAPI</strong> con <strong>Scramble</strong>
+        (<code>/docs/api</code>, <code>/docs/api.json</code>).
       </p>
 
       <div class="card">
@@ -50,6 +51,7 @@ flowchart TB
     U((Usuario_autenticado))
   end
   subgraph system [Sistema_TaskManager]
+    UC0[Consultar_docs_Scramble]
     UC1[Registrarse]
     UC2[Iniciar_sesion]
     UC3[Verificar_correo]
@@ -60,6 +62,7 @@ flowchart TB
     UC8[Sincronizar_tiempo_real]
     UC9[Cerrar_sesion]
   end
+  G --> UC0
   G --> UC1
   G --> UC2
   U --> UC3
@@ -85,7 +88,8 @@ flowchart TB
         <div class="card" style="margin-bottom: 0">
           <h3>Invitado</h3>
           <p style="margin: 0; color: var(--text-muted); font-size: 0.9rem">
-            Puede registrarse, iniciar sesión y consultar documentación pública de la API según despliegue.
+            Desde <code>guest.home</code>: documentación vía <code>VITE_API_URL/docs</code> → UI Scramble
+            <code>/docs/api</code>; registro e inicio de sesión hacia rutas protegidas.
           </p>
         </div>
         <div class="card" style="margin-bottom: 0">

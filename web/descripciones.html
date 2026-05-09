@@ -39,6 +39,43 @@
         en el comportamiento implementado en la API Laravel y la SPA Vue 3.
       </p>
 
+      <div class="card" style="margin-bottom: 1.5rem">
+        <h2 style="margin-top: 0">Referencias en el código</h2>
+        <ul class="list-check" style="margin: 0">
+          <li>
+            <strong>OpenAPI / Scramble:</strong> UI <code>GET /docs/api</code>, JSON <code>GET /docs/api.json</code>;
+            <code>Route::redirect('/docs', '/docs/api')</code> en <code>routes/web.php</code>;
+            alias bajo API <code>/api/documentation</code> → <code>/docs/api</code> en <code>routes/api.php</code>.
+          </li>
+          <li>
+            <strong>Vue Router:</strong> <code>task-manager-web/src/router/index.js</code> —
+            <code>guest.home</code>, <code>tasks.index</code> (<code>requiresAuth</code>),
+            <code>auth.verify-email</code>; guarda en <code>beforeEach</code> usando token y usuario en
+            <code>localStorage</code>.
+          </li>
+        </ul>
+      </div>
+
+      <article class="uc-card">
+        <h3>CU-DOC-00 — Consultar documentación de la API (Scramble)</h3>
+        <div class="uc-grid">
+          <span class="uc-label">Actor principal</span>
+          <div>Desarrollador o usuario técnico</div>
+          <span class="uc-label">Precondiciones</span>
+          <div>Conocer la URL base de la API (<code>APP_URL</code> o <code>VITE_API_URL</code> en el front). Acceso sujeto a <code>SCRAMBLE_PUBLIC_DOCS</code> / emails permitidos.</div>
+          <span class="uc-label">Flujo principal</span>
+          <div>
+            1) Desde la SPA, en el home, <code>window.open(VITE_API_URL + '/docs', '_blank')</code> (<code>HomeView.vue</code>).
+            2) El servidor responde con la UI Scramble en <code>/docs/api</code>.
+            3) Opcional: consumir el contrato máquina-legible en <code>/docs/api.json</code> o export CI <code>storage/api-docs/api-docs.json</code> vía <code>scramble:export</code>.
+          </div>
+          <span class="uc-label">Postcondiciones</span>
+          <div>Endpoints y esquemas OpenAPI 3 visibles o descargables para integración cliente.</div>
+          <span class="uc-label">Reglas de negocio</span>
+          <div>Los endpoints HTTP reales siguen el prefijo <code>/api</code>; Scramble documenta rutas registradas según <code>AppServiceProvider</code> y atributos en controladores.</div>
+        </div>
+      </article>
+
       <article class="uc-card">
         <h3>CU-REG-01 — Registrarse</h3>
         <div class="uc-grid">
@@ -48,8 +85,9 @@
           <div>No posee sesión válida; el correo no está registrado (o el backend devuelve error de validación).</div>
           <span class="uc-label">Flujo principal</span>
           <div>
-            1) Solicita registro en la SPA. 2) Envía <code>POST /api/register</code> con nombre, email y contraseña.
-            3) Recibe token y datos de usuario. 4) Persistencia local del token. 5) Redirección según verificación de correo.
+            1) Solicita registro en la SPA (ruta <code>guest.home</code>). 2) <code>POST /api/register</code>.
+            3) Token y usuario vía store Pinia. 4) Persistencia en <code>localStorage</code>. 5) Navegación a
+            <code>auth.verify-email</code> o <code>tasks.index</code> según <code>email_verified</code> (ver <code>HomeView</code> / <code>auth</code> store).
           </div>
           <span class="uc-label">Flujos alternos</span>
           <div>
@@ -71,15 +109,15 @@
           <div>Usuario registrado en el sistema.</div>
           <span class="uc-label">Flujo principal</span>
           <div>
-            1) Introduce credenciales. 2) <code>POST /api/login</code>. 3) Recibe token Sanctum. 4) Guarda token y usuario.
-            5) Navega a <code>/tasks</code> si el email está verificado; si no, a flujo de verificación.
+            1) Introduce credenciales. 2) <code>POST /api/login</code>. 3) Token Sanctum. 4) Store + <code>localStorage</code>.
+            5) <code>router.push({ name: 'tasks.index' })</code> o verificación según estado del usuario.
           </div>
           <span class="uc-label">Flujos alternos</span>
           <div>Credenciales inválidas: error normalizado en UI; sesión no establecida.</div>
           <span class="uc-label">Postcondiciones</span>
           <div>Token presente en peticiones subsiguientes vía encabezado <code>Authorization: Bearer</code>.</div>
           <span class="uc-label">Reglas de negocio</span>
-          <div>El router exige token para rutas con <code>requiresAuth</code>.</div>
+          <div><code>beforeEach</code>: sin token no se accede a rutas con <code>meta.requiresAuth</code> (p. ej. <code>tasks.index</code>).</div>
         </div>
       </article>
 
@@ -92,8 +130,8 @@
           <div>Sesión activa; email marcado como no verificado en el modelo de usuario.</div>
           <span class="uc-label">Flujo principal</span>
           <div>
-            1) Solicita reenvío con <code>POST /api/email/verification-notification</code>. 2) Abre enlace firmado
-            <code>GET /api/email/verify/{id}/{hash}</code>. 3) Actualiza estado en cliente (refresh de usuario).
+            1) Vista <code>auth.verify-email</code> (<code>/verify-email</code>). 2) <code>POST /api/email/verification-notification</code>.
+            3) Enlace firmado <code>GET /api/email/verify/{id}/{hash}</code>. 4) <code>refreshCurrentUser</code> en store auth.
           </div>
           <span class="uc-label">Flujos alternos</span>
           <div>Enlace expirado o inválido: mensaje de error; posible nuevo envío sujeto a throttle.</div>
@@ -113,7 +151,7 @@
           <div>Token válido; permisos de acceso a la colección de tareas del usuario.</div>
           <span class="uc-label">Flujo principal</span>
           <div>
-            1) Entra a <code>/tasks</code>. 2) <code>GET /api/tasks?page=n</code>. 3) Renderiza colección y metadatos de paginación.
+            1) Navega a <code>tasks.index</code> (<code>/tasks</code>). 2) <code>GET /api/tasks?page=n</code>. 3) Store Pinia + vista lista.
           </div>
           <span class="uc-label">Flujos alternos</span>
           <div>401: limpieza de sesión y retorno a home.</div>

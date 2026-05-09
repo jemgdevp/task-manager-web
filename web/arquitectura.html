@@ -46,7 +46,11 @@
           <ul class="list-check">
             <li>Rutas <code>/api/*</code> con middleware <code>auth:sanctum</code> en recursos protegidos.</li>
             <li>Autenticación por token; verificación de correo en flujos registrados.</li>
-            <li>Documentación OpenAPI en <code>/docs/api</code> (Scramble).</li>
+            <li>
+              <strong>Scramble</strong> (<code>dedoc/scramble</code>): UI en <code>/docs/api</code>, especificación OpenAPI en
+              <code>/docs/api.json</code>; atributos <code>@Endpoint</code> en controladores; acceso con
+              <code>SCRAMBLE_PUBLIC_DOCS</code> / <code>SCRAMBLE_ALLOWED_EMAILS</code> en <code>config/scramble.php</code>.
+            </li>
             <li>Eventos de dominio hacia canales <code>tasks</code> y <code>user.{id}.tasks</code>.</li>
           </ul>
         </div>
@@ -54,7 +58,10 @@
           <h3>Frontend (Vue 3)</h3>
           <ul class="list-check">
             <li>Pinia para estado (auth, tasks); Axios con token en <code>Authorization</code>.</li>
-            <li>Vue Router con guardas según token y verificación de email.</li>
+            <li>
+              <strong>Vue Router</strong> (<code>src/router/index.js</code>): historial HTML5, rutas nombradas y
+              <code>meta.requiresAuth</code> / <code>meta.guestOnly</code>; guarda global <code>beforeEach</code>.
+            </li>
             <li>Echo escucha <code>TaskCreated</code>, <code>TaskUpdated</code>, <code>TaskDeleted</code>.</li>
             <li>UI con componentes tipo “card” y hero alineados a la identidad del producto.</li>
           </ul>
@@ -87,6 +94,62 @@ flowchart LR
   E --> V
           </pre>
         </div>
+      </div>
+
+      <div class="card">
+        <h2>Documentación OpenAPI (Scramble)</h2>
+        <p style="margin: 0 0 0.75rem; color: var(--text-muted); font-size: 0.95rem">
+          Scramble analiza rutas y controladores y expone una UI interactiva más el JSON OpenAPI 3.
+        </p>
+        <ul class="code-list" style="list-style: none; padding-left: 0">
+          <li><code>GET /docs/api</code> — interfaz de documentación (Scramble UI)</li>
+          <li><code>GET /docs/api.json</code> — especificación OpenAPI generada</li>
+          <li><code>GET /docs</code> → redirección a <code>/docs/api</code> (<code>routes/web.php</code>)</li>
+          <li>
+            <code>/api/documentation</code> → <code>/docs/api</code> · <code>/api/documentation.json</code> → spec JSON
+            (<code>routes/api.php</code>, prefijo <code>/api</code>)
+          </li>
+          <li>Export estático: <code>php artisan scramble:export --path=storage/api-docs/api-docs.json</code></li>
+          <li>Análisis CI: <code>php artisan scramble:analyze</code></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h2>Rutas Vue (Vue Router)</h2>
+        <p style="margin: 0 0 0.75rem; color: var(--text-muted); font-size: 0.95rem">
+          Fuente: <code>task-manager-web/src/router/index.js</code>. Base: <code>createWebHistory(import.meta.env.BASE_URL)</code>.
+        </p>
+        <table style="width: 100%; border-collapse: collapse; font-size: 0.88rem">
+          <thead>
+            <tr style="border-bottom: 1px solid var(--border); text-align: left">
+              <th style="padding: 0.4rem 0.5rem">Ruta</th>
+              <th style="padding: 0.4rem 0.5rem">Nombre</th>
+              <th style="padding: 0.4rem 0.5rem">Meta / notas</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td style="padding: 0.45rem 0.5rem"><code>/</code></td>
+              <td style="padding: 0.45rem 0.5rem"><code>guest.home</code></td>
+              <td style="padding: 0.45rem 0.5rem; color: var(--text-muted)">Landing; enlace a docs abre <code>VITE_API_URL + '/docs'</code></td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border)">
+              <td style="padding: 0.45rem 0.5rem"><code>/tasks</code></td>
+              <td style="padding: 0.45rem 0.5rem"><code>tasks.index</code></td>
+              <td style="padding: 0.45rem 0.5rem; color: var(--text-muted)"><code>requiresAuth: true</code> — sin token → redirección a <code>guest.home</code></td>
+            </tr>
+            <tr>
+              <td style="padding: 0.45rem 0.5rem"><code>/verify-email</code></td>
+              <td style="padding: 0.45rem 0.5rem"><code>auth.verify-email</code></td>
+              <td style="padding: 0.45rem 0.5rem; color: var(--text-muted)">Flujo de verificación de correo (<code>query status</code>)</td>
+            </tr>
+          </tbody>
+        </table>
+        <p style="margin: 0.75rem 0 0; font-size: 0.88rem; color: var(--text-muted)">
+          <strong>beforeEach:</strong> si la ruta tiene <code>requiresAuth</code> y no hay token en <code>localStorage</code>, navega a
+          <code>guest.home</code>. Si <code>guestOnly</code> y hay sesión: si el email no está verificado →
+          <code>auth.verify-email</code>; si está verificado → <code>tasks.index</code>.
+        </p>
       </div>
 
       <div class="card">
